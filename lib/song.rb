@@ -1,11 +1,18 @@
 class Song
-
   attr_accessor :name, :album, :id
 
   def initialize(name:, album:, id: nil)
     @id = id
     @name = name
     @album = album
+  end
+
+  def self.all
+    sql = <<-SQL
+      SELECT * FROM songs;
+    SQL
+
+    DB[:conn].execute(sql)
   end
 
   def self.drop_table
@@ -48,5 +55,4 @@ class Song
     song = Song.new(name: name, album: album)
     song.save
   end
-
 end
